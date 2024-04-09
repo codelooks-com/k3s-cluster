@@ -32,7 +32,7 @@ spec:
       namespace: storage
   values:
     monitoring:
-      enabled: false
+      enabled: true
       createPrometheusRules: true
     ingress:
       dashboard:
@@ -85,7 +85,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:10902
+        prometheusEndpoint: #http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:10902
       storage:
         useAllNodes: true
         useAllDevices: true
