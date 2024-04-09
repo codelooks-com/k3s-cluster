@@ -33,7 +33,7 @@ spec:
   values:
     monitoring:
       enabled: true
-      createPrometheusRules: false
+      createPrometheusRules: true
     ingress:
       dashboard:
         ingressClassName: internal
