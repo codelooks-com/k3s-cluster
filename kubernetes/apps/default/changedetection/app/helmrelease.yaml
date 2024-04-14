@@ -78,9 +78,8 @@ spec:
           - hosts: [*host]
     persistence:
       config:
-        enabled: true
         existingClaim: changedetection
-        advancedMounts:
-          main:
-            main:
-              - path: /datastore
+        # advancedMounts:
+        #   main:
+        #     main:
+        #       - path: /datastore
