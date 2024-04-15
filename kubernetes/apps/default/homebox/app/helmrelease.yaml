@@ -39,6 +39,7 @@ spec:
               HBOX_LOG_LEVEL: info
               HBOX_LOG_FORMAT: text
               HBOX_MEB_MAX_UPLOAD_SIZE: 10
+              HBOX_WEB_PORT: &port 7745
             image:
               repository: ghcr.io/hay-kot/homebox
               tag: v0.10.3
@@ -60,7 +61,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 7745
+            port: *port
     ingress:
       app:
         className: internal
