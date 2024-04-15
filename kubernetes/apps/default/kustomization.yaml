@@ -6,3 +6,4 @@ resources:
   - ./namespace.yaml
     # Flux-Kustomizations
   - ./changedetection/ks.yaml
+  - ./uptimekuma/ks.yaml
