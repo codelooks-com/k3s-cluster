@@ -74,3 +74,5 @@ spec:
     persistence:
       config:
         existingClaim: uptimekuma
+        globalMounts:
+          - path: /app/data
