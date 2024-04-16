@@ -38,7 +38,7 @@ spec:
               repository: ghcr.io/onedr0p/sabnzbd
               tag: 4.2.3
             env:
-              TZ: {$Timezone}
+              TZ: ${TIMEZONE}
               SABNZBD__PORT: &port 80
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd,
