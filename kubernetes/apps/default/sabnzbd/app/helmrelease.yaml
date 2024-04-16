@@ -106,7 +106,7 @@ spec:
         type: emptyDir
       media:
         type: nfs
-        server: storage.${SECRET_INTERNAL_DOMAIN}"
+        server: storage.${SECRET_INTERNAL_DOMAIN}
         path: /mnt/pool/downloads
         globalMounts:
           - path: /downloads
