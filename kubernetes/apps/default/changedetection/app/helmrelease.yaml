@@ -79,3 +79,5 @@ spec:
     persistence:
       config:
         existingClaim: changedetection
+        globalMounts:
+          - path: /datastore
