@@ -7,4 +7,5 @@ resources:
     # Flux-Kustomizations
   - ./changedetection/ks.yaml
   - ./homebox/ks.yaml
+  - ./sabnzbd/ks.yaml
   - ./uptimekuma/ks.yaml
