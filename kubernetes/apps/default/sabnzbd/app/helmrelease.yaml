@@ -104,9 +104,9 @@ spec:
         existingClaim: sabnzbd
       tmp:
         type: emptyDir
-      # media:
-      #   type: nfs
-      #   server: storage.${SECRET_INTERNAL_DOMAIN}
-      #   path: /mnt/pool/downloads
-      #   globalMounts:
-      #     - path: /downloads
+      media:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/downloads
+        globalMounts:
+          - path: /downloads
