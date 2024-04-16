@@ -49,12 +49,6 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: *port
     ingress:
       app:
         className: internal
