@@ -56,14 +56,18 @@ data:
               key: {{HOMEPAGE_VAR_NEXTDNS_API}}
   settings.yaml: |
     title: Dashboard
-    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
-    useEqualHeights: true
+    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/selfhosted-light.png
+    color: gray
     theme: dark
     background:
       image: https://i.imgur.com/5DJSIvq.png
       blur: sm
-    color: gray
-    headerStyle: clean
+    iconStyle: theme
+    headerStyle: underlined
+    hideVersion: true
+    target: _self
+    showStats: false
+    statusStyle: "dot"
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: true
