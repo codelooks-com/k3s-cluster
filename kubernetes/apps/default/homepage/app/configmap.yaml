@@ -7,124 +7,116 @@ metadata:
     app.kubernetes.io/name: homepage
 data:
   bookmarks.yaml: |
+    - Communicate:
+        - Discord:
+            - icon: discord.png
+              href: 'https://discord.com/app'
+        - Gmail:
+            - icon: gmail.png
+              href: 'http://gmail.com'
+        - Google Calendar:
+            - icon: google-calendar.png
+              href: 'https://calendar.google.com'
+        - Outlook:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/outlook.png
+              href: 'https://outlook.com'
     - Media:
         - YouTube:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
         - Spotify:
-            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/navidrome.png
+            - icon: spotify.png
               href: 'http://open.spotify.com'
-        - Sports:
-            - icon: slice.png
-              href: 'https://sportsurge.io'
-        - Anime:
-            - icon: shiori.png
-              href: 'https://aniwave.to'
-
-    - Cloud:
-        - CloudFlare:
-            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/cloudflare.png
-              href: https://dash.cloudflare.com
-        - Azure Console:
-            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/azure.png
-              href: https://aws.amazon.com/console/
-        - Terraform Cloud:
-            - icon: terraform.png
-              href: https://app.terraform.io
-        - Pushover:
-            - icon: pushover.png
-              href: https://client.pushover.net/
-
-    - Dev:
-        - Github:
-            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/github.png
-              href: https://github.com/LukeEvansTech
-        - Kubesearch:
+        - Youtube Music:
+            - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/youtube-music.png
+              href: 'https://music.youtube.com'
+    - Reading:
+        - Reddit:
+            - icon: reddit.png
+              href: 'https://old.reddit.com'
+    - Git:
+        - kubesearch:
             - icon: kubernetes-dashboard.png
-              href: https://kubesearch.dev
+              href: 'https://kubesearch.dev/'
+        - home-ops:
+            - icon: github.png
+              href: 'https://github.com/codelooks-com/k3s-cluster'
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
-    - Monitoring:
-        - Uptime Kuma:
-            href: https://uptime.mambalab.live
-            icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/uptime-kuma.png
-            description: Status Monitor
+    - Network:
+        - NextDNS:
+            href: https://my.nextdns.io
+            icon: nextdns.png
+            description: NextDNS
             widget:
-              type: uptimekuma
-              url: https://uptime.mambalab.live
-              fields: ["up", "down", "uptime", "incident"]
-              slug: services
-    - Home:
-         - Paperless:
-            icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/paperlessngx.png	
-            href: https://paperless.mambalab.live
-            description: Document Management System
-            widget:
-              type: paperlessngx
-              url: https://paperless.mambalab.live
-              key: {{HOMEPAGE_VAR_PAPERLESS_API_TOKEN}}
-              fields: ["total", "inbox"]
-
-    - Selfhosted:
-        - Miniflux:
-            icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/miniflux.png
-            href: https://miniflux.mambalab.live
-            description: RSS Feed Reader
-            widget:
-              type: miniflux
-              url: https://miniflux.mambalab.live
-              key: {{HOMEPAGE_VAR_MINIFLUX_API_TOKEN}}
-              fields: ["unread", "read"]
+              type: nextdns
+              profile: {{HOMEPAGE_VAR_NEXTDNS_ID}}
+              key: {{HOMEPAGE_VAR_NEXTDNS_API}}
   settings.yaml: |
-    title: codelooks Homepage
-    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/selfhosted-light.png
+    title: Dashboard
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    useEqualHeights: true
     theme: dark
+    background:
+      image: https://github.com/Jas-SinghFSU/homepage-dracula/blob/main/backgrounds/Kraken.png
+      opacity: 20
     color: gray
     headerStyle: clean
-    background:
-      image: https://i.imgur.com/5DJSIvq.png
-      blur: sm
-    hideVersion: true
-    statusStyle: "dot"
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
     layout:
-      Home:
+      Network:
         style: row
-        columns: 2
-        icon: mdi-home-analytics
-      Selfhosted:
+        columns: 3
+        icon: mdi-network
+      Games:
         style: row
-        columns: 2
-        icon: mdi-server
-      Monitoring:
-        style: row
-        icon: mdi-chart-line
-        columns: 2
-      Media:
+        columns: 3
+        icon: mdi-minecraft
+      Calendar:
+        style: column
+        icon: mdi-calendar
+      Video:
         style: column
         icon: mdi-play-circle
-      Cloud:
-        style: column
-        icon: mdi-cloud
-      Dev:
-        style: column
-        icon: mdi-language-python
-      Clutch Vacations:
-        style: column
-        icon: mdi-wallet-travel
-    providers:
-      longhorn:
-        url: https://longhorn.mambalab.live
+      Books:
+        style: row
+        columns: 2
+        icon: mdi-book
+      Infrastructure:
+        style: row
+        columns: 5
+        icon: mdi-server
+      Observability:
+        style: row
+        columns: 5
+        icon: mdi-chart-line
+      Home:
+        style: row
+        columns: 5
+        icon: mdi-home-analytics
+      Downloads:
+        style: row
+        columns: 3
+        icon: mdi-download-circle
   widgets.yaml: |
+    - logo:
+        icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/lds-transparent.png
     - search:
-        provider: [duckduckgo]
+        provider: [duckduckgo, google]
         focus: false
         target: _blank
+    - greeting:
+        text_size: xl
+        text: "Howdy Hey!"
     - kubernetes:
         cluster:
           cpu: true
-          label: mambalab
           memory: true
           show: true
           showLabel: true
@@ -133,18 +125,13 @@ data:
           memory: true
           show: false
           showLabel: true
-    - longhorn:
-        expanded: false
-        total: true
-        labels: true
-        nodes: false
     - datetime:
         text_size: l
         format:
-          dateStyle: short
           timeStyle: short
+          dateStyle: short
           hourCycle: h23
-  
+    
   custom.css: |
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Fira+Code&family=Poppins&family=Source+Code+Pro&family=Work+Sans&display=swap');
 
