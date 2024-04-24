@@ -65,7 +65,6 @@ data:
     headerStyle: clean
     background:
       image: https://i.imgur.com/5DJSIvq.png
-      blur: sm
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: true
