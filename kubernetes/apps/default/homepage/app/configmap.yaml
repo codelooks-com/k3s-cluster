@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: homepage
 data:
+  custom.css: "https://github.com/Jas-SinghFSU/homepage-dracula/blob/main/custom.css"
   bookmarks.yaml: |
     - Communicate:
         - Discord:
@@ -76,7 +77,7 @@ data:
     useEqualHeights: true
     theme: dark
     background:
-      image: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/assets/101518784_p0.jpg
+      image: https://github.com/Jas-SinghFSU/homepage-dracula/blob/main/backgrounds/Kraken.png
       opacity: 20
     color: gray
     headerStyle: clean
