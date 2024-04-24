@@ -58,10 +58,10 @@ data:
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
     useEqualHeights: true
-    theme: dark
+    theme: gray
     background:
-      image: https://github.com/Jas-SinghFSU/homepage-dracula/blob/main/backgrounds/Kraken.png
-      opacity: 20
+      image: https://i.imgur.com/5DJSIvq.png
+      blur: sm
     color: gray
     headerStyle: clean
     quicklaunch:
