@@ -25,7 +25,7 @@ data:
             - icon: youtube.png
               href: 'https://youtube.com/feed/subscriptions'
         - Spotify:
-            - icon: spotify.png
+            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/navidrome.png
               href: 'http://open.spotify.com'
         - Youtube Music:
             - icon: https://raw.githubusercontent.com/joryirving/home-ops/main/.docs/icons/youtube-music.png
@@ -34,7 +34,10 @@ data:
         - Reddit:
             - icon: reddit.png
               href: 'https://old.reddit.com'
-    - Git:
+    - Dev:
+        - Github:
+            - icon: https://raw.githubusercontent.com/Jas-SinghFSU/homepage-dracula/main/dracula_icons/github.png
+              href: https://github.com/LukeEvansTech
         - kubesearch:
             - icon: kubernetes-dashboard.png
               href: 'https://kubesearch.dev/'
@@ -55,15 +58,14 @@ data:
               profile: {{HOMEPAGE_VAR_NEXTDNS_ID}}
               key: {{HOMEPAGE_VAR_NEXTDNS_API}}
   settings.yaml: |
-    title: Dashboard
-    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
-    useEqualHeights: true
-    theme: gray
+    title: Mayweather Homepage
+    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/selfhosted-light.png
+    theme: dark
+    color: gray
+    headerStyle: clean
     background:
       image: https://i.imgur.com/5DJSIvq.png
       blur: sm
-    color: gray
-    headerStyle: clean
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: true
@@ -132,7 +134,7 @@ data:
           dateStyle: short
           hourCycle: h23
   
-custom.css: |
+  custom.css: |
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Fira+Code&family=Poppins&family=Source+Code+Pro&family=Work+Sans&display=swap');
 
     .theme-gray {
