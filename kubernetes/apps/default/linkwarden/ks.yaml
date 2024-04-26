@@ -9,17 +9,17 @@ spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *appname
-  interval: 10m
+      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/linkwarden/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: false
-  dependsOn:
-    - name: external-secrets-stores
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
   postBuild:
     substitute:
-      APP: *appname
+      APP: *app
       VOLSYNC_CAPACITY: 5Gi
