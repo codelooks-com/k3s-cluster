@@ -48,7 +48,7 @@ spec:
               tag: v2.5.3
             env:
               NEXT_PUBLIC_DISABLE_REGISTRATION: "false"
-              NEXT_PUBLIC_CREDENTIALS_ENABLED: "false"
+              NEXT_PUBLIC_CREDENTIALS_ENABLED: "true"
               DISABLE_NEW_SSO_USERS: "false"
               STORAGE_FOLDER: "config" # Will always end up as /data/STOREAGE_FOLDER so eg /data/config
               HOME: /data/config
