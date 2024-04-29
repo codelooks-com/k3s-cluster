@@ -14,7 +14,7 @@ data:
         interval: 1m
         ui:
           hide-hostname: true
-          hide-url: true
+          hide-url: false
         dns:
           query-name: "${GATUS_SUBDOMAIN:-${APP}}.${SECRET_DOMAIN}"
           query-type: A
