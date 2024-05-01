@@ -9,6 +9,7 @@ resources:
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
   - ./k8s-gateway.yaml
+  - ./kubernetes-sigs-nfd.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./netdata.yaml
