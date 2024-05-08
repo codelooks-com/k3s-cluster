@@ -10,6 +10,5 @@ resources:
   - ./homepage/ks.yaml
   - ./miniflux/ks.yaml
   - ./linkwarden/ks.yaml
-  - ./sabnzbd/ks.yaml
   - ./theme-park/ks.yaml
   - ./uptimekuma/ks.yaml
