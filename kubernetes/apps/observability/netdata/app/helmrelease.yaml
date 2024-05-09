@@ -48,6 +48,6 @@ spec:
       path: /
       pathType: Prefix
       hosts:
-        - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - "netdata.${SECRET_DOMAIN}"
       spec:
         ingressClassName: internal
