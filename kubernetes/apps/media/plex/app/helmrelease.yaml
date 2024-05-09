@@ -137,12 +137,12 @@ spec:
         server: storage.${SECRET_INTERNAL_DOMAIN}
         path: /mnt/pool/tv4k
         globalMounts:
-          - path: /tv
+          - path: /tv4k
             readOnly: true
       movies4k:
         type: nfs
         server: storage.${SECRET_INTERNAL_DOMAIN}
-        path: /mnt/pool/movies
+        path: /mnt/pool/movies4k
         globalMounts:
           - path: /movies4k
             readOnly: true
