@@ -38,7 +38,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  # wait: true - https://discord.com/channels/673534664354430999/1201478552130953316
+  wait: true # https://discord.com/channels/673534664354430999/1201478552130953316
   interval: 30m
   retryInterval: 1m
   timeout: 5m
