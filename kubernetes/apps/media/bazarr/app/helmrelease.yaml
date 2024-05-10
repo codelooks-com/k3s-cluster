@@ -1,0 +1,154 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app bazarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      bazarr:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: bazarr-secret
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/joryirving/bazarr
+              tag: 1.4.2@sha256:6d95df91ed83e4610362f55ca3e5c0fbd0be12b646839439babeb63088087c07
+            env:
+              BAZARR__AUTHENTICATION_METHOD: Forms
+              BAZARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              BAZARR__INSTANCE_NAME: Bazarr
+              BAZARR__PORT: &port 80
+              BAZARR__LOG_LEVEL: info
+              BAZARR__THEME: dark
+              TZ: ${TIMEZONE}
+            envFrom: *envFrom
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 23m
+                memory: 204Mi
+              limits:
+                memory: 1Gi
+          subcleaner:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.2.3@sha256:19cc7c317d125c5737ecb9a9159d00b5d97f39c45225c6483de365d62fc09fa8
+              pullPolicy: IfNotPresent
+            args:
+              - --repo=https://github.com/KBlixt/subcleaner
+              - --ref=master
+              - --period=24h
+              - --root=/add-ons
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44, 10000]
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Bazarr
+          gethomepage.dev/icon: bazarr.png
+          gethomepage.dev/description: Subtitle Downloads
+          gethomepage.dev/widget.type: bazarr
+          gethomepage.dev/widget.url: http://bazarr.downloads:6767
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_BAZARR_TOKEN}}"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/bazarr/dracula.css"></head>';
+            sub_filter_once on;
+        hosts:
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      config:
+        existingClaim: *app
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons
+      tv:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/tv
+        globalMounts:
+          - path: /tv
+      movies:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/movies
+        globalMounts:
+          - path: /movies
+      tv4k:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/tv4k
+        globalMounts:
+          - path: /tv4k
+      movies4k:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/movies4k
+        globalMounts:
+          - path: /movies4k
+      scripts:
+        type: configMap
+        name: bazarr-configmap
+        defaultMode: 0775
+        globalMounts:
+          - path: /scripts/post-process.sh
+            subPath: post-process.sh
+            readOnly: true
