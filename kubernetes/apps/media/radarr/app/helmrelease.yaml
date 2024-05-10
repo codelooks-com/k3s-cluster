@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: sabnzbd
+  name: radarr
 spec:
   interval: 30m
   chart:
@@ -25,38 +25,41 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: storage
   values:
     controllers:
-      sabnzbd:
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: radarr-secret
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sabnzbd
-              tag: 4.3.1
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.5.2.8781@sha256:4b7de43df00613272532de7ecfc6a3207cb0a74fdcb2b05dd110ec2ebb493352
             env:
+              PUSHOVER_DEBUG: "false"
+              # RADARR__AUTHENTICATION_METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__INSTANCE_NAME: Radarr
+              RADARR__PORT: &port 80
+              RADARR__LOG_LEVEL: info
+              # RADARR__THEME: dark
               TZ: ${TIMEZONE}
-              SABNZBD__PORT: &port 80
-              SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd,
-                sabnzbd.default,
-                sabnzbd.default.svc,
-                sabnzbd.default.svc.cluster,
-                sabnzbd.default.svc.cluster.local,
-                sabnzbd.${SECRET_DOMAIN}
-            envFrom:
-              - secretRef:
-                  name: sabnzbd-secret
+            envFrom: *envFrom
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /api?mode=version
+                    path: /ping
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -69,9 +72,9 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
               limits:
-                memory: 8Gi
+                memory: 1Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -83,7 +86,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: sabnzbd
+        controller: radarr
         ports:
           http:
             port: *port
@@ -93,15 +96,15 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
-          gethomepage.dev/name: SABnzbd
-          gethomepage.dev/icon: sabnzbd.png
-          gethomepage.dev/description: NZB Download Client
-          gethomepage.dev/widget.type: sabnzbd
-          gethomepage.dev/widget.url: http://sabnzbd.default.svc.cluster.local:8080
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SABNZBD_TOKEN}}"
+          gethomepage.dev/name: Radarr
+          gethomepage.dev/icon: radarr.png
+          gethomepage.dev/description: Movie Downloads
+          gethomepage.dev/widget.type: radarr
+          gethomepage.dev/widget.url: http://radarr.media
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/sabnzbd/dracula.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/radarr/dracula.css"></head>';
             sub_filter_once on;
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -112,7 +115,15 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: sabnzbd
+        existingClaim: radarr
+      # pushover-notify:
+      #   type: configMap
+      #   name: radarr-configmap
+      #   defaultMode: 0775
+      #   globalMounts:
+      #     - path: /scripts/pushover-notify.sh
+      #       subPath: pushover-notify.sh
+      #       readOnly: true
       tmp:
         type: emptyDir
       downloads:
@@ -121,3 +132,10 @@ spec:
         path: /mnt/pool/downloads
         globalMounts:
           - path: /downloads
+      movies:
+        type: nfs
+        server: storage.${SECRET_INTERNAL_DOMAIN}
+        path: /mnt/pool/movies
+        globalMounts:
+          - path: /movies
+            readOnly: true
