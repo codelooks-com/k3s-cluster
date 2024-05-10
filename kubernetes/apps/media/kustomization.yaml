@@ -8,6 +8,7 @@ resources:
   - ./prowlarr/ks.yaml
   - ./overseerr/ks.yaml
   - ./plex/ks.yaml
+  - ./radarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./tautulli/ks.yaml
   # - ./wizarr/ks.yaml
