@@ -41,11 +41,14 @@ spec:
               repository: ghcr.io/onedr0p/prowlarr-develop
               tag: 1.17.0.4448@sha256:66e786d023cf94a7005b9a9effde9e7e4557e799b3f00cfb7b084f81ba15082c
             env:
-              PROWLARR__INSTANCE_NAME: Prowlarr
-              PROWLARR__PORT: &port 80
-              PROWLARR__LOG_LEVEL: info
-              # PROWLARR__AUTHENTICATION_METHOD: External
-              # PROWLARR__THEME: dark
+              PROWLARR__APP__INSTANCENAME: Prowlarr
+              PROWLARR__APP__THEME: dark
+              # PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__SERVER__PORT: &port 80
+              PROWLARR__UPDATE__BRANCH: develop
               TZ: ${TIMEZONE}
             envFrom: *envFrom
             probes:
