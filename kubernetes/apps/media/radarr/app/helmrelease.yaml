@@ -45,7 +45,7 @@ spec:
               tag: 5.5.3.8819@sha256:c9637c4bdf6e929b823dc8497ff34fdcb2e0868703cd686a20a1d55b8b6381de
             env:
               RADARR__APP__INSTANCENAME: Radarr
-              RADARR__APP__THEME: dark
+              # RADARR__APP__THEME: dark
               # RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
