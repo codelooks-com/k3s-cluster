@@ -139,4 +139,3 @@ spec:
         path: /mnt/pool/movies
         globalMounts:
           - path: /movies
-            readOnly: true
