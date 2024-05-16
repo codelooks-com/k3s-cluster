@@ -114,7 +114,7 @@ spec:
           gethomepage.dev/icon: bazarr.png
           gethomepage.dev/description: Subtitle Downloads
           gethomepage.dev/widget.type: bazarr
-          gethomepage.dev/widget.url: http://bazarr.media.svc.cluster.local
+          gethomepage.dev/widget.url: http://bazarr.media.svc.cluster.local:80
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_BAZARR_TOKEN}}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
