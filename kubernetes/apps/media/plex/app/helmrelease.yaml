@@ -90,6 +90,14 @@ spec:
       app:
         className: external
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Video
+          gethomepage.dev/name: Plex
+          gethomepage.dev/icon: plex.png
+          gethomepage.dev/description: Media Player
+          gethomepage.dev/widget.type: plex
+          gethomepage.dev/widget.url: http://plex.media:32400
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
@@ -102,9 +110,9 @@ spec:
     persistence:
       config:
         existingClaim: plex
-        # TODO: If setting up Plex for the first time, you'll want to add the globalMounts section
-        globalMounts:
-          - path: /config/Library/Application Support/Plex Media Server
+        # # TODO: If setting up Plex for the first time, you'll want to add the globalMounts section
+        # globalMounts:
+        #   - path: /config/Library/Application Support/Plex Media Server
       # Separate PVC for cache to avoid backing up cache files
       cache:
         existingClaim: plex-cache
