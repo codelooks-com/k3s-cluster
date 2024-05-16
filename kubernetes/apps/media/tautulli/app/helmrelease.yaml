@@ -106,12 +106,12 @@ spec:
           gethomepage.dev/icon: tautulli.png
           gethomepage.dev/description: Plex Stream Monitoring
           gethomepage.dev/widget.type: tautulli
-          gethomepage.dev/widget.url: http://tautulli.media:8181
+          gethomepage.dev/widget.url: http://tautulli.media.svc.cluster.local
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</body>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/tautulli/dracula.css"></body>';
-            sub_filter_once on;
+          # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #   proxy_set_header Accept-Encoding "";
+          #   sub_filter '</body>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/tautulli/dracula.css"></body>';
+          #   sub_filter_once on;
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
