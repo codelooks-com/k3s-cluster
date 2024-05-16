@@ -97,7 +97,7 @@ spec:
           gethomepage.dev/icon: sabnzbd.png
           gethomepage.dev/description: NZB Download Client
           gethomepage.dev/widget.type: sabnzbd
-          gethomepage.dev/widget.url: http://sabnzbd.media.svc.cluster.local:8080
+          gethomepage.dev/widget.url: http://sabnzbd.media.svc.cluster.local
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SABNZBD_TOKEN}}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
