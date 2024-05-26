@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: gatus
@@ -135,10 +135,10 @@ spec:
         hosts:
           - host: &host status.${SECRET_DOMAIN}
             paths:
-            - path: /
-              service:
-                identifier: app
-                port: http
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
           - hosts: [*host]
     serviceAccount:

@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: tautulli
@@ -40,11 +40,15 @@ spec:
             env:
               TZ: ${TIMEZONE}
             command: ["/usr/local/bin/python", "Tautulli.py"]
-            args: [
-              "--config", "/config/config.ini",
-              "--datadir", "/config",
-              "--port", "80"
-            ]
+            args:
+              [
+                "--config",
+                "/config/config.ini",
+                "--datadir",
+                "/config",
+                "--port",
+                "80",
+              ]
             probes:
               liveness: &probes
                 enabled: true
