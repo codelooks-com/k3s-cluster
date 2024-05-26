@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vlmcsd
+spec:
+  interval: 30m0s
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      vlmcsd:
+        containers:
+          app:
+            image:
+              repository: mikolatero/vlmcsd
+              tag: latest@sha256:217a03280410aa06bca7dd1b4e3e206317ba740a990d90683462fb21b17c9e7d
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 250Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: vlmcsd
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          io.cilium/lb-ipam-ips: 10.96.8.86
+        ports:
+          http:
+            port: 1688
