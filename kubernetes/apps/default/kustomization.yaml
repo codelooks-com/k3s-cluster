@@ -12,3 +12,4 @@ resources:
   - ./linkwarden/ks.yaml
   - ./theme-park/ks.yaml
   - ./uptimekuma/ks.yaml
+  - ./wallos/ks.yaml
