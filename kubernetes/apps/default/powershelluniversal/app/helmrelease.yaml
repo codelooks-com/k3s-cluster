@@ -57,7 +57,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5000
+            port: 80
     ingress:
       app:
         className: internal
